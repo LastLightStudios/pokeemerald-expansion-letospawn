@@ -1,0 +1,145 @@
+mapscripts LittlerootTown_ProfBirchLab_LetoVersion_MapScripts {
+    MAP_SCRIPT_ON_TRANSITION: LittlerootTown_ProfBirchLab_LetoVersion_OnTransition
+    MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE [
+        VAR_BIRCH_LAB_STATE, 2: LittlerootTown_ProfBirchLab_LetoVersion_EventScript_SetPlayerPosForReceiveStarter
+    ]
+    MAP_SCRIPT_ON_FRAME_TABLE [
+        VAR_BIRCH_LAB_STATE, 2: LittlerootTown_ProfBirchLab_LetoVersion_EventScript_GiveStarterEvent
+        VAR_BIRCH_LAB_STATE, 4: LittlerootTown_ProfBirchLab_LetoVersion_EventScript_GivePokedexEvent
+    ]
+}
+
+script LittlerootTown_ProfBirchLab_LetoVersion_OnTransition {
+    call (ProfBirch_EventScript_UpdateLocation)
+}
+
+script LittlerootTown_ProfBirchLab_LetoVersion_EventScript_SetPlayerPosForReceiveStarter {
+    turnobject(OBJ_EVENT_ID_PLAYER, DIR_NORTH)
+}
+
+script LittlerootTown_ProfBirchLab_LetoVersion_EventScript_GiveStarterEvent {
+    lockall
+    bufferleadmonspeciesname(STR_VAR_1)
+    msgbox(TakePokemon, MSGBOX_DEFAULT)
+    playfanfare(MUS_OBTAIN_ITEM)
+    call(NicknameStarter)
+    msgbox(GoSeeRival, MSGBOX_DEFAULT)
+    clearflag(FLAG_HIDE_ROUTE_101_BOY)
+    setvar(VAR_BIRCH_LAB_STATE, 3)
+    releaseall
+}
+
+script LittlerootTown_ProfBirchLab_LetoVersion_EventScript_GivePokedexEvent {
+    lockall
+    applymovement(OBJ_EVENT_ID_PLAYER, LittlerootTown_ProfBirchLab_LetoVersion_Movement_PlayerEnterLabForPokedex)
+    waitmovement(0)
+    msgbox(TakePokedex, MSGBOX_DEFAULT)
+    playfanfare(MUS_OBTAIN_ITEM)
+    //msgbox("{PLAYER} received the Pokédex!")
+    waitfanfare
+	setflag(FLAG_SYS_POKEDEX_GET)
+	special(SetUnlockedPokedexFlags)
+	setflag(FLAG_RECEIVED_POKEDEX_FROM_BIRCH)
+	setvar(VAR_CABLE_CLUB_TUTORIAL_STATE, 1)
+    giveitem(ITEM_INFINITE_CANDY)
+    playfanfare(MUS_OBTAIN_ITEM)
+    //msgbox("{PLAYER} received the Infinite Candy!")
+    waitfanfare
+    msgbox(format("PROF. BIRCH: Raising Pokémon should be fun and easy."))
+    applymovement(LOCALID_RIVAL, LittlerootTown_ProfBirchLab_LetoVersion_Movement_RivalApproachPlayer)
+    waitmovement(0)
+    applymovement(OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight)
+    waitmovement(0)
+    checkplayergender
+    if(var(VAR_RESULT)==FEMALE){
+        msgbox(BrendanGotPokedexToo, MSGBOX_DEFAULT)
+    } else {
+        msgbox(MayGotPokedexToo, MSGBOX_DEFAULT)
+    }
+    giveitem(ITEM_MASTER_BALL, 100)
+	setvar(VAR_BIRCH_LAB_STATE, 5)
+	setflag(FLAG_ADVENTURE_STARTED)
+	setvar(VAR_OLDALE_TOWN_STATE, 1)
+	setvar(VAR_LITTLEROOT_RIVAL_STATE, 4)
+	setvar(VAR_LITTLEROOT_TOWN_STATE, 3)
+    releaseall
+}
+
+movement LittlerootTown_ProfBirchLab_LetoVersion_Movement_RivalApproachPlayer {
+    walk_down
+	walk_in_place_faster_left
+	step_end
+}
+
+movement LittlerootTown_ProfBirchLab_LetoVersion_Movement_PlayerEnterLabForPokedex {
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+}
+
+script NicknameStarter {
+    msgbox(NicknamePokemon, MSGBOX_YESNO)
+    if(var(VAR_RESULT) == YES){
+        call(Common_EventScript_GetGiftMonPartySlot)
+        call(Common_EventScript_NameReceivedPartyMon)
+    }
+}
+
+text TakePokemon{
+    "PROF. BIRCH: So, {PLAYER}.\p"
+	"I've heard so much about you from\n"
+	"your father.\p"
+	"I've heard that you don't have your\n"
+	"own POKéMON yet.\p"
+	"But the way you battled earlier,\n"
+	"you pulled it off with aplomb!\p"
+	"I guess you have your father's blood\n"
+	"in your veins after all!\p"
+	"Oh, yes. As thanks for rescuing me,\n"
+	"I'd like you to have the POKéMON you\l"
+	"used earlier.\p"
+	"{PLAYER} received the {STR_VAR_1}!"
+}
+
+text NicknamePokemon{
+    "PROF. BIRCH: While you're at it, why not\n"
+    "give a nickname to that {STR_VAR_1}?"
+}
+
+text GoSeeRival{
+    "PROF. BIRCH: If you work with Pokémon\n"
+	"and gain experience, I think you'll make\l"
+	"an extremely good TRAINER.\p"
+	"My kid, {RIVAL}, is also studying\n"
+	"Pokémon while helping me out.\p"
+	"You can find them on Route 103."
+}
+
+text TakePokedex{ 
+    "PROF. BIRCH: Oh, hi, {PLAYER}!\p"
+    "I heard you beat my kiddo, {RIVAL} \n"
+    "{RIVAL}'s been helping with my research\n"
+    "for a long time.\p"
+    "Here, {PLAYER}, I ordered this for my \n"
+    "research, but I think you should have \l"
+    "this Pokédex."
+}
+
+text MayGotPokedexToo {
+    "MAY: Oh, wow, {PLAYER}\n"
+    "You got a Pokédex, too!\p"
+    "That's great! Just like me!\n"
+    "I've got something for you, too!"
+}
+
+text BrendanGotPokedexToo {
+    "Brendan: Oh, wow, {PLAYER}\n"
+    "You got a Pokédex, too!\p"
+    "That's great! Just like me!\n"
+    "I've got something for you, too!"
+}

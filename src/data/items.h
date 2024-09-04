@@ -2193,7 +2193,7 @@ const struct Item gItemsInfo[] =
         .iconPalette = gItemIconPalette_MaxRepel,
     },
 
-    [ITEM_INFINITE_REPEL] =
+    [ITEM_REPELLANT] =
     {
         .name = _("Repellant"),
         .price = 0,

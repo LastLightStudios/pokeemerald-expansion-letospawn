@@ -954,7 +954,7 @@ void HandleUseExpiredRepel(struct ScriptContext *ctx)
 void ItemUseOutOfBattle_Repellant(u8 taskId)
 {
     bool8 RepellantOn = FlagGet(FLAG_UNUSED_0x020);
-        FlagToggle(FLAG_UNUSED_0x020)
+    FlagToggle(FLAG_UNUSED_0x020);
     if (RepellantOn)
     {
         PlaySE(SE_POKENAV_OFF);
@@ -971,7 +971,7 @@ void ItemUseOutOfBattle_Repellant(u8 taskId)
         PlaySE(SE_REPEL);
         if (gTasks[taskId].tUsingRegisteredKeyItem)
         {
-            DisplayItemMessageOnField(taskId, gText_RepellantOn, Task_CloseCantUseKeyItemMessage);
+            DisplayItemMessageOnField(taskId, gText_RepellantOff, Task_CloseCantUseKeyItemMessage);
         }
         else{
             DisplayItemMessage(taskId, 1, gText_RepellantOn, CloseItemMessage);

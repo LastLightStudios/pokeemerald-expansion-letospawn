@@ -24,6 +24,8 @@ script LittlerootTown_ProfBirchLab_LetoVersion_EventScript_GiveStarterEvent {
     playfanfare(MUS_OBTAIN_ITEM)
     call(NicknameStarter)
     msgbox(GoSeeRival, MSGBOX_DEFAULT)
+    giveitem(ITEM_REPELLANT)
+    playfanfare(MUS_OBTAIN_ITEM)
     clearflag(FLAG_HIDE_ROUTE_101_BOY)
     setvar(VAR_BIRCH_LAB_STATE, 3)
     releaseall
@@ -116,8 +118,9 @@ text GoSeeRival{
 	"and gain experience, I think you'll make\l"
 	"an extremely good TRAINER.\p"
 	"My kid, {RIVAL}, is also studying\n"
-	"Pokémon while helping me out.\p"
-	"You can find them on Route 103."
+	"Pokémon while helping me out.\l"
+	"You can find them on Route 103.\l"
+    "Also, take this Repellant."
 }
 
 text TakePokedex{ 

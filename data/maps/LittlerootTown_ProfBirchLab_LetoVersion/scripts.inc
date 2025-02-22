@@ -172,7 +172,7 @@ NicknameStarter_1:
 LittlerootTown_ProfBirchLab_LetoVersion_EventScript_GivePokedexEvent_Text_0:
 # 50 "data/maps/LittlerootTown_ProfBirchLab_LetoVersion/scripts.pory"
 	.string "PROF. BIRCH: Raising Pokémon should be\n"
-	.string "fun and easy.$"
+	.string "fun and easy$"
 
 TakePokemon::
 # 95 "data/maps/LittlerootTown_ProfBirchLab_LetoVersion/scripts.pory"

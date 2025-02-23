@@ -26,6 +26,8 @@ script LittlerootTown_ProfBirchLab_LetoVersion_EventScript_GiveStarterEvent {
     msgbox(GoSeeRival, MSGBOX_DEFAULT)
     giveitem(ITEM_REPELLANT)
     playfanfare(MUS_OBTAIN_ITEM)
+    giveitem(ITEM_INFINITE_CANDY)
+    playfanfare(MUS_OBTAIN_ITEM)
     clearflag(FLAG_HIDE_ROUTE_101_BOY)
     setvar(VAR_BIRCH_LAB_STATE, 3)
     releaseall
@@ -37,17 +39,12 @@ script LittlerootTown_ProfBirchLab_LetoVersion_EventScript_GivePokedexEvent {
     waitmovement(0)
     msgbox(TakePokedex, MSGBOX_DEFAULT)
     playfanfare(MUS_OBTAIN_ITEM)
-    //msgbox("{PLAYER} received the Pokédex!")
     waitfanfare
 	setflag(FLAG_SYS_POKEDEX_GET)
 	special(SetUnlockedPokedexFlags)
 	setflag(FLAG_RECEIVED_POKEDEX_FROM_BIRCH)
 	setvar(VAR_CABLE_CLUB_TUTORIAL_STATE, 1)
-    giveitem(ITEM_INFINITE_CANDY)
-    playfanfare(MUS_OBTAIN_ITEM)
-    //msgbox("{PLAYER} received the Infinite Candy!")
     waitfanfare
-    msgbox(format("PROF. BIRCH: Raising Pokémon should be fun and easy"))
     applymovement(LOCALID_RIVAL, LittlerootTown_ProfBirchLab_LetoVersion_Movement_RivalApproachPlayer)
     waitmovement(0)
     applymovement(OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterRight)
@@ -120,7 +117,8 @@ text GoSeeRival{
 	"My kid, {RIVAL}, is also studying\n"
 	"Pokémon while helping me out.\l"
 	"You can find them on Route 103.\l"
-    "Also, take this Repellant."
+    "Also, take this Repellant and Infinite Candy. \n"
+    "It's not for everyone, but you have the option."
 }
 
 text TakePokedex{ 
